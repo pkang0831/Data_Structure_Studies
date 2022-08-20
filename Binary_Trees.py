@@ -1,3 +1,8 @@
+import random
+from collections import deque
+
+# this script is for implementing binary tree with nodes
+
 # # Binary Tree
 #       tree
 #       ----
@@ -32,80 +37,115 @@ class Tree:
         self.root = None
 
     def insert(self, val) -> None:
-        # check if the tree is empty
         newNode = Node(val)
         if not self.root:
             self.root = newNode
         else:
             self._insert(val, self.root)
 
-        # if the tree is not empty, there are some rules.
-        # if the value is less than the parent node value, it goes to left
-        # if the value is more than the parent node value, it goes to right
-        # new node needs to be entered in a empty space. so children needs to be checked.
+        
+    def _insert(self, val, node):
+        newNode = Node(val)
 
-    def _insert(self, value, node):
-        newNode = Node(value)
-        if value < node.val:  # check LEFT
-
-            if node.left is None:  # check if LEFT is empty
-
+        if val < node.val:
+            # traverse left
+            if not node.left:
                 node.left = newNode
-                newNode.parent = node
-
-            else:  # if it is not empty
-
-                self._insert(value, node.left)
-
-        else:  # check RIGHT
-
-            if node.right is None:
-
-                node.right = newNode
-                newNode.parent = node
-
             else:
+                self._insert(val, node.left)
 
-                self._insert(value, node.right)
+        else:
+            # traverse right
+            if not node.right:
+                node.right = newNode
+            else:
+                self._insert(val, node.right)
+
+        
+    def preorder(self) -> list:
+        # pre order traversal:
+        # visit root, visit left, visit right
+        if not self.root:
+            return None
+        else:
+            mylist = self._preorder(self.root)
+        
+        return mylist
+
+    def _preorder(self, node):
+        mylist = []
+        if node:
+            mylist.append(node.val)
+            
+            mylist = mylist + self._preorder(node.left)
+        
+            mylist = mylist + self._preorder(node.right)
+
+        else:
+            return [None]
+
+        return mylist
+
+
+    def inorder(self) -> list:
+        if not self.root:
+            return None
+        else:
+            mylist = self._inorder(self.root)
+
+        return mylist
+
+    def _inorder(self, node):
+        mylist = []
+        if node:
+
+            mylist = mylist + self._inorder(node.left)
+
+            mylist.append(node.val)
+        
+            mylist = mylist + self._inorder(node.right)
+
+        else:
+            return [None]
+
+        return mylist
+
+    def postorder(self) -> list:
+        if not self.root:
+            return
+        else:
+            mylist = self._postorder(self.root)
+        
+        return mylist
+
+    def _postorder(self, node):
+
+        mylist = []
+
+        if node:
+
+            mylist = mylist + self._postorder(node.left)
+
+            mylist = mylist + self._postorder(node.right)
+
+            mylist.append(node.val)
+
+        else:
+
+            return [None]
+
+        return mylist
+
+
+    def binary_search(self, val) -> None:
+        pass
+
 
     def rotateLeft(self):
         raise NotImplementedError
 
     def rotateRight(self):
         raise NotImplementedError
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     def print_tree(self, val="val", left="left", right="right"):
@@ -167,6 +207,17 @@ if __name__ == "__main__":
     init = Tree()
 
     for i in range(0,10):
-        init.insert(i)
+        init.insert(random.randint(0,200))
 
     init.print_tree()
+    lists = init.inorder()
+    lists2 = init.preorder()
+    lists3 = init.postorder()
+    print(lists)
+    print(lists2)
+    print(lists3)
+
+
+
+      git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
