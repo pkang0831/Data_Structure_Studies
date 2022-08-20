@@ -217,7 +217,3 @@ if __name__ == "__main__":
     print(lists2)
     print(lists3)
 
-
-
-      git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
