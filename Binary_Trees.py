@@ -137,8 +137,34 @@ class Tree:
         return mylist
 
 
-    def binary_search(self, val) -> None:
-        pass
+    def search(self, val) -> bool:
+        # I think this is an automatic implementation of binary search.
+
+        if not self.root:
+            return False
+        else:
+            return self._search(self.root, val)
+        # if not self.root.left and not self.root.right:
+        #     if self.root == val:
+        #         return True
+        #     else:
+        #         return False
+
+    def _search(self, node, val):
+
+        if node:
+            if node.val == val:
+                print(node.val)
+                return True
+            elif node.val < val:
+                return self._search(node.right, val)
+            elif node.val > val:
+                return self._search(node.left, val)
+        else:
+            return False
+
+
+        
 
 
     def rotateLeft(self):
@@ -207,13 +233,16 @@ if __name__ == "__main__":
     init = Tree()
 
     for i in range(0,10):
-        init.insert(random.randint(0,200))
+        # init.insert(random.randint(0,200))
+        init.insert(i)
 
     init.print_tree()
     lists = init.inorder()
     lists2 = init.preorder()
     lists3 = init.postorder()
+    bool1 = init.search(7)
     print(lists)
     print(lists2)
     print(lists3)
+    print(bool1)
 
