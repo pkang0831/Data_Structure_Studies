@@ -86,6 +86,31 @@ class Tree:
 
         return mylist
 
+    def reversePreorder(self):
+        if not self.root:
+            return None
+        else:
+            mylist = self._reversePreorder(self.root)
+
+        return mylist
+
+    def _reversePreorder(self, node):
+
+        mylist = []
+        
+        if node:
+
+            mylist.append(node.val)
+
+            mylist = mylist + self._reversePreorder(node.right)
+
+            mylist = mylist + self._reversePreorder(node.left)
+
+        else:
+            return [None]
+
+        return mylist
+
 
     def inorder(self) -> list:
         if not self.root:
@@ -137,34 +162,86 @@ class Tree:
         return mylist
 
 
-    def search(self, val) -> bool:
+    def binary_search(self, val) -> bool:
         # I think this is an automatic implementation of binary search.
 
         if not self.root:
             return False
         else:
-            return self._search(self.root, val)
+            return self._binary_search(self.root, val)
         # if not self.root.left and not self.root.right:
         #     if self.root == val:
         #         return True
         #     else:
         #         return False
 
-    def _search(self, node, val):
+    def _binary_search(self, node, val):
 
         if node:
             if node.val == val:
                 print(node.val)
                 return True
             elif node.val < val:
-                return self._search(node.right, val)
+                return self._binary_search(node.right, val)
             elif node.val > val:
-                return self._search(node.left, val)
+                return self._binary_search(node.left, val)
         else:
             return False
 
 
+    def dfs(self, val):
+        if not self.root:
+            return
+        else:
+            bool1 = self._dfs(self.root, val)
+
+        return bool1  
+
+    def _dfs(self, node, val):
+        # visited = []
+
+        # visited.append(node.val)
+
+        if not node:
+            return
+
+        # if node.val in visited:
+        #     return
+
+        if node.val == val:
+            return True
+
+        if node:
+            bool1 = False
+            if node.left:
+                bool1 = self._dfs(node.left, val)
+            elif node.right:
+                bool1 = self._dfs(node.right, val)
+
+            return bool1
+        else:
+            return
+
+
+    def height(self):
+        '''
+        returns height of the current tree
+        '''
         
+        if not self.root:
+            return 0
+        else:
+            return self._height(self.root)
+
+    def _height(self, node):
+
+        if not node:
+            return 0
+            
+        leftHeight = self._height(node.left)
+        rightHeight = self._height(node.right)
+
+        return max(leftHeight, rightHeight) + 1
 
 
     def rotateLeft(self):
@@ -233,16 +310,21 @@ if __name__ == "__main__":
     init = Tree()
 
     for i in range(0,10):
-        # init.insert(random.randint(0,200))
-        init.insert(i)
+        init.insert(random.randint(0,200))
+        # init.insert(i)
 
     init.print_tree()
     lists = init.inorder()
     lists2 = init.preorder()
     lists3 = init.postorder()
-    bool1 = init.search(7)
+    lists4 = init.reversePreorder()
+    bool1 = init.binary_search(7)
+    bool2 = init.dfs(30)
+    heights = init.height()
     print(lists)
     print(lists2)
     print(lists3)
+    print(lists4)
     print(bool1)
-
+    print(bool2)
+    print(heights)
