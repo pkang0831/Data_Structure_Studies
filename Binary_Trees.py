@@ -135,6 +135,34 @@ class Tree:
 
         return mylist
 
+
+    def _inorder_while(self, node):
+        mylist = []
+        
+        def helperFunc(node):
+            nonlocal mylist
+            if not node:
+                return None
+            
+            self._inorder_while(node.left)
+            mylist.append(node.val)
+            self._inorder_while(node.right)
+
+        return helperFunc(node)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def postorder(self) -> list:
         if not self.root:
             return
