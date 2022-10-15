@@ -11,27 +11,26 @@ class Solution:
         def hashMaps():
             """store the inputlist to product:(duration, profit)"""
             for prod, profits in self.inputList:
-                self.tempDict[prod] = [(len(prod), profits)]
-
+                self.tempDict[prod] = [(len(prod), profits/len(prod))]
+                
             for key, val in self.tempDict.items():
-                self.invTempDict[val[0][0]] = key
+                self.invTempDict[val[0][0]] = val[0][1]
         hashMaps()
-        print(self.tempDict)
-        print(self.invTempDict)
 
 
     def dfs(self, nums, path, ret):
 
         if sum(path) > self.monthLimit:
-            return 
+            possiblePath = path[:-1]
+            curSum = 0
+            for i in possiblePath:
+                curSum += self.invTempDict[i]
+            
+            if curSum > self.curMax:
+                self.curMax = curSum
+                self.bestCombin = possiblePath
 
-        ret.append(path)
-
-        # curSum = sum(ret)
-
-        # if curSum > self.curMax:
-        #     self.curMax = curSum
-        #     self.bestCombin = ret
+            return
 
         for i in range(len(nums)):
             self.dfs(nums[i:], path+[nums[i]], ret)
@@ -40,8 +39,8 @@ class Solution:
         ret = []
         prodLengths = [val[0][0] for key, val in self.tempDict.items()]
         self.dfs(prodLengths, [], ret)
-        print(ret)
         print(self.curMax)
+        print(self.bestCombin)
         return ret
 
 
